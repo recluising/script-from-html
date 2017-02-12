@@ -5,34 +5,33 @@
  */
 
 var program = require('commander');
-var clear = require('clear');
-var chalk = require('chalk');
-var figlet = require('figlet');
-var request = require('request');
+var scrapeIt = require('scrape-it');
 
 program
 	.version('0.1.0')
-	/*.option('-l, --lala', 'do somehting')*/
 	.parse(process.argv);
 
-
-/*if (program.lala) {
-	console.log('lalalalalala');
-	process.exit();
-}*/
-
-request({
-  uri: "http://shakespeare.mit.edu/hamlet/full.html",
-}, function(error, response, body) {
-  console.log(body);
+scrapeIt('http://shakespeare.mit.edu/hamlet/full.html', {
+	chapters: {
+		listItem: 'h3'
+	},
+	narratorFromChapters: {
+		listItem: 'blockquote > i'
+	},
+	messages: {
+		listItem: 'blockquote',
+		data: {
+			fromRole: {
+				selector: 'a'
+			},
+			fromNarrator: {
+				selector: 'p i'
+			}
+		}
+	},
+	roles: {
+		listItem: 'a > b'
+	}
+}).then(page => {
+	console.log(page.messages);
 });
-
-
-/**clear();
-console.log(
-	chalk.yellow(
-		figlet.textSync('SFH', {
-			horizontalLayout: 'full'
-		})
-	)
-);*/
