@@ -18,6 +18,6 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^2.9.0",
-    "scrape-it": "^3.2.2"
+    "nightmare": "^2.9.1"
   }
 }
