@@ -1,23 +1,23 @@
 {
-  "name": "script-from-html",
-  "version": "0.1.0",
-  "description": "Small tool for getting literary scripts from a webpage diving into dom",
-  "main": "index.js",
-  "bin": {
-    "sfh": "bin/index.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "script",
-    "from",
-    "html"
-  ],
-  "author": "Luis Recio",
-  "license": "ISC",
-  "dependencies": {
-    "commander": "^2.9.0",
-    "nightmare": "^2.9.1"
-  }
+	"name": "script-from-html",
+	"version": "0.1.0",
+	"description": "Small tool for getting literary scripts from a webpage diving into dom",
+	"main": "index.js",
+	"bin": {
+		"sfh": "bin/index.js"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"script",
+		"from",
+		"html"
+	],
+	"author": "Luis Recio",
+	"license": "ISC",
+	"dependencies": {
+		"commander": "^2.9.0",
+		"nightmare": "^2.9.1"
+	}
 }
