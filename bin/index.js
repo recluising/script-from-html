@@ -10,38 +10,61 @@ program
 var nightmare = Nightmare();
 
 nightmare
-	.goto('http://shakespeare.mit.edu/hamlet/full.html')
+	.goto('http://shakespeare.mit.edu/henryv/full.html')
 	.evaluate(function () {
 		var script = [];
-		var text;
-		var tag;
 
 		var currentUser = 'Director';
 
-		function parseNode(tag, text) {
-			var tagName = tag.toLowerCase();
-			var userName;
+		// Parse blockquote, specialization
+		function handleBlockQuote(children) {
+			var currentChildren;
+			var tag;
+
+			for (var index in children) {
+				currentChild = children[index];
+
+				if (currentChild.tagName && currentChild.textContent) {
+					tag = currentChild.tagName.toLowerCase();
+
+					if (tag == 'h3' || tag === 'a') {
+						pushScriptLine(currentUser, currentChild.textContent);
+					} else if (tag === 'p') {
+						var tempUser = 'Director';
+						pushScriptLine(tempUser, currentChild.textContent);
+					}
+				}
+			}
+		}
+
+		// Parse node, first level
+		function parseNode(node) {
+			if (!currentNode.innerHTML && !currentNode.textContent) {
+				return;
+			}
+
+			var tagName = node.tagName.toLowerCase();
 
 			switch (tagName) {
 				case 'h3':
 					currentUser = 'Director';
-					pushScriptLine(currentUser, text)
+					pushScriptLine(currentUser, node.textContent);
 					break;
 
 				case 'blockquote':
-					// iterate blockquote when <p><i> is narrator and <a> is conversation
+					handleBlockQuote(node.childNodes);
 					break;
 
 				case 'a':
-					userName = //get child <b> content
-					currentUser = userName;
+					currentUser = node.querySelector('b').textContent;
 					break;
 			}
 		}
 
-		function pushScriptLine(currentUser, message) {
+		// Script line filler
+		function pushScriptLine(user, message) {
 			script.push({
-				user: currentUser,
+				user: user,
 				message: message
 			});
 		}
@@ -49,14 +72,11 @@ nightmare
 		var currentNode = document.querySelector('h3');
 
 		// Handling first node
-		script.push(pushScriptLine(currentUser, currentNode.textContent));
+		parseNode(currentNode);
 
+		// Main iterator
 		while (currentNode = currentNode.nextElementSibling) {
-			text = currentNode.textContent;
-			if (text) {
-				tag = currentNode.tagName;
-				parseNode(tag, text);
-			}
+			parseNode(currentNode);
 		}
 		return script;
 
