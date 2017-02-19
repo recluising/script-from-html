@@ -1,10 +1,10 @@
 {
-  "name": "script-from-html",
-  "version": "0.1.0",
+  "name": "shakespeare-web-scraping",
+  "version": "0.2.0",
   "description": "Small tool for getting literary scripts from a webpage diving into dom",
   "main": "index.js",
   "bin": {
-    "sfh": "bin/index.js"
+    "sws": "bin/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
